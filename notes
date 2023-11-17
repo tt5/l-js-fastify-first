@@ -1,1 +1,2 @@
+podman run -p 27018:27018 --name mongo mongo
 npm init fastify
