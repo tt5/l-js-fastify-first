@@ -1,2 +1,9 @@
 podman run -p 27018:27018 --name mongo mongo
 npm init fastify
+podman run -d -p 3000:3000 --network="host" --name fastify fastify
+http :3000
+http :3000/todos
+http :3000/todos title="one"
+podman login docker.io
+podman push fastify docker.io/63061/l-js-fastify-first
+podman build -t fastify .

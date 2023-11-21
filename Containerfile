@@ -15,6 +15,7 @@ RUN apk update && apk add --no-cache dumb-init
 ENV HOME=/home/app
 ENV APP_HOME=$HOME/node/
 ENV NODE_ENV=production
+ENV MONGO_URL=mongodb://user:password@localhost:27018/one?authSource=admin
 WORKDIR $APP_HOME
 COPY --chown=node:node . $APP_HOME
 COPY --chown=node:node --from=builder /build $APP_HOME
