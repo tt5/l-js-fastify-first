@@ -13,6 +13,9 @@
     },
     "MONGO_URL": {
       "type": "string"
+    },
+    "POSTGRES_URL": {
+      "type": "string"
     }
   }
 }
