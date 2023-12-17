@@ -7,9 +7,9 @@ module.exports = fp(async function dbAutoHooks (fastify, opts) {
   fastify.register(schemas)
 
   fastify.decorate('postgresDataSource', {
-    async listDb () {
+    async queryDb (sql) {
       const db = await fastify.pg.connect()
-      const { rows } = await db.query('SELECT * FROM mytable')
+      const { rows } = await db.query(sql)
       db.release()
       return rows
     },
