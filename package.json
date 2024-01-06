@@ -44,7 +44,8 @@
     "fastify": "^4.2.0",
     "fastify-cli": "^4.2.0",
     "fastify-plugin": "^3.0.0",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "squid": "^0.5.2"
   },
   "devDependencies": {
     "standard": "^16.0.4",
