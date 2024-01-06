@@ -1,7 +1,6 @@
 'use strict'
 const fp = require('fastify-plugin')
 const schemas = require('./schemas/loader')
-const { sql } = require('squid/pg')
 
 module.exports = fp(async function dbAutoHooks (fastify, opts) {
 
@@ -10,8 +9,9 @@ module.exports = fp(async function dbAutoHooks (fastify, opts) {
   fastify.decorate('postgresDataSource', {
     async queryDb (q) {
       const db = await fastify.pg.connect()
-      const { rows } = await db.query(sql`${q}`)
+      const { rows } = await db.query(q)
       db.release()
+      //return {text: text, values: values}
       return rows
     },
   })

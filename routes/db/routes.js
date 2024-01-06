@@ -5,7 +5,7 @@ module.exports = async function dbRoutes (fastify, _opts) {
     method: 'GET',
     url: '/',
     handler: async function query (request, reply) {
-      const res = await this.postgresDataSource.queryDb('SELECT * FROM mytable')
+      const res = await this.postgresDataSource.queryDb(`SELECT * FROM mytable`)
       return res
     }
   })
@@ -14,7 +14,9 @@ module.exports = async function dbRoutes (fastify, _opts) {
     method: 'GET',
     url: '/put/:item',
     handler: async function query (request, reply) {
-      const { item } = request.params
+      var { item } = request.params
+      const clean=/[^\w]*/g
+      item = item.replace(clean,'')
       const res = await this.postgresDataSource.queryDb(`INSERT INTO mytable (one) VALUES ('${item}') RETURNING *;`)
       return res
     }
@@ -24,7 +26,10 @@ module.exports = async function dbRoutes (fastify, _opts) {
     method: 'GET',
     url: '/delete/:col/:item',
     handler: async function query (request, reply) {
-      const { col, item } = request.params
+      var { col, item } = request.params
+      const clean=/[^\w]*/g
+      col = col.replace(clean,'')
+      item = item.replace(clean,'')
       const res = await this.postgresDataSource.queryDb(`DELETE FROM mytable WHERE ${col}='${item}' RETURNING *;`)
       return res
     }
