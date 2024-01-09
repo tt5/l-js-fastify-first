@@ -26,7 +26,7 @@ module.exports = async function (fastify, opts) {
     autoHooksPattern: /.*hooks(\.js|\.cjs)$/i,
     autoHooks: true,
     cascadeHooks: true,
-    options: Object.assign({}, opts)
+    options: Object.assign({prefix: '/api'}, opts)
   })
 }
 
