@@ -1,6 +1,6 @@
 'use strict'
 
-import oauthPlugin from '@fastify/oauth2'
+const oauthPlugin = require('@fastify/oauth2')
 
 module.exports = async function root (fastify, opts) {
 
@@ -14,10 +14,10 @@ module.exports = async function root (fastify, opts) {
       auth: oauthPlugin.GITHUB_CONFIGURATION
     },
     startRedirectPath: '/login/github',
-    callbackUri: 'http://localhost:3000/login/github/callback'
+    callbackUri: process.env.NODE_ENV=="production" ? 'https://tt15551.cc/api/login/github/callback' : 'http://localhost:3000/api/login/github/callback'
   })
 
-  fastify.get('/', async function welcomeHandler (request, reply) {
+  fastify.get('/', async function welcomeHandler (req, rep) {
     return { root: true }
   })
 
@@ -25,7 +25,17 @@ module.exports = async function root (fastify, opts) {
 
     const token = await fastify.githubOAuth2.getAccessTokenFromAuthorizationCodeFlow(req)
 
-    return {hello: token}
+    rep.redirect('http://localhost:8000')
+    const res = await fetch("https://api.github.com/user", {
+      headers: {
+        "authorization": `Bearer ${token.token.access_token}`
+      }
+    })
+      //rep.log.info(`token: ${token.token.access_token}`)
+      const user = await res.json()
+      rep.log.info(`user: ${user.login}`)
+      rep.sse({data: "new user"})
+    //return {"user": user}
   })
 }
 

@@ -1,0 +1,13 @@
+
+project: l-js-monolith
+
+providers:
+  hashicorp_vault:
+    env:
+      GITHUB_ID:
+        path: cubbyhole/github_id-dev
+        field: github_id
+      GITHUB_SECRET:
+        path: cubbyhole/github_secret-dev
+        field: github_secret
+
